@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Comentarios</title>
+    <style>
+        /* styles.css */
+      body {
+            background-color: #020000; /* Color azul claro */
+            color: black; /* Color del texto en blanco */
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        h1 {
+    color: #FF5733; /* Cambia el color de h1 */
+}
+
+h2 {
+    color: #ffffff; /* Cambia el color de h2 */
+}
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"], textarea {
+            width: 96%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #comentarios {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #comentarios li {
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #comentarios li p {
+            margin: 0;
+        }
+
+        #comentarios li span {
+            display: block;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        /* Reset de márgenes y padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        section {
+            padding: 20px;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+        /* Diseño responsivo */
+        @media screen and (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            section {
+                margin: 10px;
+            }
+
+            header {
+                padding: 15px;
+            }
+
+            footer {
+                padding: 15px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            nav ul li a {
+                font-size: 16px;
+            }
+
+            header {
+                padding: 10px;
+            }
+
+            section {
+                padding: 15px;
+            }
+        }
+
+        h1 {
+            text-align: center; /* Centra el texto horizontalmente */
+        }
+
+        img.full-width {
+            width: 100%; /* Imagen ocupa todo el ancho */
+            height: auto; /* Mantiene proporciones */
+            display: block; /* Elimina espacios en blanco */
+            margin: 0; /* Sin márgenes */
+            padding: 0; /* Sin relleno */
+        }
+    </style>
+</head>
+<body>
+    <!-- Imagen principal -->
+    <img src="images/Dejatucomentario.png" alt="Vista general" class="full-width">
+    <a href="../index.html" style=";"><img src="images/volve_inicio.png" width="100" height="100" align="right"></a>
+    <div class="container">
+
+        <form id="commentForm">
+           <h2> <label for="nombre">Nombre:</label> </h2>
+<input type="text" id="nombre" name="nombre" required>
+
+           <h2> <label for="comentario">Comentario:</label></h2>
+            <textarea id="comentario" name="comentario" rows="4" required></textarea>
+            <div style="text-align: center; margin-top: 50px;">
+                <input type="submit" value="Enviar comentario">
+            </div>
+        </form>
+
+        <h2>Comentarios recientes</h2>
+        <ul id="comentarios">
+            <!-- Los comentarios se mostrarán aquí -->
+        </ul>
+    </div>
+
+    <script>
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var nombre = document.getElementById('nombre').value.trim();
+            var comentario = document.getElementById('comentario').value.trim();
+
+            if (nombre && comentario) {
+                var nuevoComentario = {
+                    nombre: nombre,
+                    comentario: comentario,
+                    fecha: new Date().toLocaleString()
+                };
+
+                var comentarios = JSON.parse(localStorage.getItem('comentarios')) || [];
+                comentarios.push(nuevoComentario);
+                localStorage.setItem('comentarios', JSON.stringify(comentarios));
+
+                mostrarComentario(nuevoComentario);
+
+                document.getElementById('nombre').value = '';
+                document.getElementById('comentario').value = '';
+            }
+        });
+
+        function mostrarComentario(comentario) {
+            var comentariosList = document.getElementById('comentarios');
+            var comentarioItem = document.createElement('li');
+
+            var nombre = document.createElement('p');
+            nombre.textContent = comentario.nombre;
+            comentarioItem.appendChild(nombre);
+
+            var texto = document.createElement('p');
+            texto.textContent = comentario.comentario;
+            comentarioItem.appendChild(texto);
+
+            var fecha = document.createElement('span');
+            fecha.textContent = comentario.fecha;
+            comentarioItem.appendChild(fecha);
+
+            comentariosList.appendChild(comentarioItem);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            var comentarios = JSON.parse(localStorage.getItem('comentarios')) || [];
+            comentarios.forEach(function(comentario) {
+                mostrarComentario(comentario);
+            });
+        });
+    </script>
+</body>
+</html>

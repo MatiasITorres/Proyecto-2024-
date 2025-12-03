@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teatro</title>
+    <style>
+        img {
+            max-width: 100%; /* La imagen no excederá el ancho de su contenedor */
+            height: auto;   /* Mantiene la proporción original */
+            display: block; /* Elimina espacios blancos alrededor de las imágenes */
+        }
+
+        /* Opcional: Centrar imágenes dentro de su contenedor */
+        .image-container {
+            text-align: center;
+        }
+    </style>
+
+    <style>
+        body {
+            background-color: #F9A9CB; /* Color azul claro */
+            color: black; /* Color del texto en blanco */
+        }
+h1 {
+    text-align: center; /* Centra el texto horizontalmente */
+}
+    </style>
+    <style>
+        /* Reset de márgenes y padding */
+        * {
+            margin: 10;
+            padding: 10;
+            box-sizing: border-box;
+        }
+
+
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        section {
+            padding: 20px;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+  @media (max-width : 1024px){
+.header{
+    height: 60px; /*achicamos el largo del header*/
+}
+.header .nav .logo{
+    font-size: 1.563em; /*25px tamaño letra*/
+    padding: 0 1.250em; /*20px de ancho*/
+    line-height: 60px; /*alto de linea, logo centrado en el header*/
+}
+.header .nav .nav-menu{
+    flex-direction: column; /*elementos del nav uno arriba de otro*/
+    align-items: center; /*centramos los elementos*/
+    background-color: #2c3e50; /*color del nav-menu*/
+    position: fixed;
+    left: 0;
+    top: 60px; /*posicion de 60px para que se vea el header*/
+    width: 100%; /*ancho del nav-menu*/
+    height: calc(100vh - 60px); /*100% - altura del nav-menu*/
+    overflow-y: auto; /*cada vez que se necesite el scroll/ruedita lo añadirá*/
+    padding: 1.250em 0; /*relleno arriba y abajo 20px 0 a los lados*/
+    left: 100%; /*importante para mover el menu de izquierda a derecha*/
+    transition: left 0.3s; /*transición */
+}
+.header .nav .nav-menu .nav-menu-item{
+    line-height: 70px; /*alto de linea elementos nav en menu*/
+}
+.header .nav .nav-menu .nav-menu-item a:hover{
+    background: none;
+    color: #ff9800; /*color al pasar el mouse por elementos nav*/
+}
+.header .nav .nav-toggle{
+    display: block; /*ocultamos boton menu en laptops/pc*/
+}
+.header .nav .nav-menu_visible{
+    left: 0; /*hacemos que el menu sea invisible*/
+}
+.banner{
+    background-position:center; /*posición de imagen de fondo*/
+}
+.banner .banner-text{
+    font-size: 200%; /*tamaño texto del banner*/
+}
+.banner .banner-description{
+    font-size: 170%; /*tamaño texto del banner*/
+}
+}
+
+@media only screen and (min-device-width : 540px) and (max-device-width : 768px) {
+.banner .banner-text{
+    font-size: 150%; /*tamaño texto del banner*/
+}
+.banner .banner-description{
+    font-size: 130%; /*tamaño texto del banner*/
+}
+}
+
+/*Iphone 6 7 8 VERTICAL*/
+@media only screen and (min-device-width : 414px) and (max-device-width : 540px) {
+.banner .banner-text{
+    font-size: 110%; /*tamaño texto del banner*/
+}
+.banner .banner-description{
+    font-size: 100%; /*tamaño texto del banner*/
+}
+}
+
+/*Pixel 2 XL - Pixel 2*/
+@media only screen and (min-device-width : 411px) and (max-device-width : 414px) {
+.banner .banner-text{
+    font-size: 110%; /*tamaño texto del banner*/
+}
+.banner .banner-description{
+    font-size: 100%; /*tamaño texto del banner*/
+}
+}
+/*iPhone X*/
+@media only screen and (min-device-width : 375px) and (max-device-width : 411px) {
+.banner .banner-text{
+    font-size: 100%; /*tamaño texto del banner*/
+}
+.banner .banner-description{
+    font-size: 90%; /*tamaño texto del banner*/
+}
+}
+/*Galaxy S5 - Moto G4*/
+@media only screen and (min-device-width : 360px) and (max-device-width : 375px) {
+.banner .banner-text{
+    font-size: 100%; /*tamaño texto del banner*/
+}
+.banner .banner-description{
+    font-size: 90%; /*tamaño texto del banner*/
+}
+}
+/*Galaxy Fold*/
+@media only screen and (min-device-width : 280px) and (max-device-width : 360px) {
+.banner .banner-text{
+    font-size: 80%; /*tamaño texto del banner*/
+}
+.banner .banner-description{
+    font-size: 70%; /*tamaño texto del banner*/
+}
+}
+    </style>
+</head>
+<body>
+ <p> <a href="../EJ_6Info_proyecto_final_ibnformaticaA.html" >   <img src="images/Volver_atras.png"   width="150" height="100" align="right" >  </a></P> 
+ <a href="../../index.html" style="color:#000000;" ><img src="images/volve_inicio.png"   width="100" height="100" align="right" >   </a>
+    <h1>Teatro</h1>
+    <h2>Alumnos</h2>
+<p>Leone ,Costantini,Albano, Velardo, Bracaioli</p>
+<h2><p>Descripción</p></h2>
+<p>Consiste en la creación de una maqueta que represente un teatro público inteligente, es decir, que en el mundo del espectáculo se integrará la tecnología. Este tipo de innovación es actualmente relevante para la sociedad, ya que permite optimizar tiempos y reducir costos de producción mediante la automatización de procesos. Sin embargo, su desarrollo presenta desafíos importantes, entre ellos, lograr un trabajo en equipo eficaz, preservar la creatividad a lo largo del proceso y adaptarse al funcionamiento de cada uno de los dispositivos involucrados.
+</p>
+<h2><p>Objetivos generales</p></h2>
+<p>• Formar hábitos de trabajo autónomo y colaborativo.
+</p>
+<p>• Fomentar la creatividad y la innovación en el diseño y desarrollo.
+ </p>
+<p>• Optimizar el área de trabajo, tanto digital como físico, de acuerdo con la funcionalidad que se aplicará.
+</p>
+<p>• Generar y aplicar conocimientos técnicos en el uso de diversos dispositivos tecnológicos a utilizar.
+</p>
+
+<h2><p>Objetivos Específicos</p></h2>
+<p>•	Dividir las tareas que se deban realizar para que cada integrante asuma responsabilidades específicas.</p>
+<p>•	Revisar los avances, resolver dudas y mantener una comunicación constante entre todos los integrantes y con cada profesor.</p>
+<p>•	Incentivar la generación de ideas y propuestas innovadoras para el diseño de la maqueta, permitiendo que cada miembro aporte su visión creativa.</p>
+<p>•	Organizar y mantener el espacio de trabajo físico en condiciones adecuadas.</p>
+<p>•	Utilizar herramientas digitales para la planificación y comunicación, asegurando que todos estén al tanto de las tareas y del progreso.</p>
+<p>•	Capacitarse en el manejo del microcontrolador ESP32, así como de los sensores de temperatura y distancia, el relé y la pantalla LCD, realizando pruebas y simulaciones para garantizar su correcto funcionamiento en la maqueta.</p>
+<p>•	Aplicar de manera práctica los conocimientos adquiridos para integrar y configurar los dispositivos.</p>
+ 
+   <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe src="https://drive.google.com/file/d/1nJ4d1P7mlI-3-Uq6UYeYILXeb0o3885_/preview
+"></iframe>
+</body>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía ESP32</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  .full-width {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .content {
+    padding: 20px;
+  }
+  .section {
+    margin-bottom: 30px;
+  }
+  .image-text-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  .image-text-block img {
+    width: 45%;
+    height: auto;
+    border-radius: 8px;
+  }
+  .image-text-block .text {
+    width: 50%;
+    padding: 0 20px;
+  }
+  pre {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 14px;
+  }
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<!-- Imagen principal -->
+<img src="images/image5.png" alt="Imagen panorámica del ESP32" class="full-width">
+
+<div class="content">
+  <!-- Introducción -->
+  <div class="section">
+    <h2>Introducción</h2>
+    <p>
+      Primero, descarga e instala el programa Arduino IDE en tu computadora. Este programa será usado para escribir y cargar el código en el ESP32. 
+      Puedes descargarlo desde 
+      <a href="https://www.arduino.cc/en/software" target="_blank">https://www.arduino.cc/en/software</a>.
+    </p>
+  </div>
+
+  <!-- Configuración de preferencias -->
+  <div class="section">
+    <h2>Configuración de Preferencias</h2>
+    <div class="image-text-block">
+      <img src="images/image6.png" alt="Configuración en Arduino IDE">
+      <div class="text">
+        <p>
+          Abre Arduino IDE y dirígete a <strong>Archivo > Preferencias</strong>. 
+          En la ventana de preferencias, encontrarás un espacio para la "URL adicional de Gestor de Tarjetas". 
+          Ahí, pega la siguiente dirección:
+        </p>
+        <p><code>https://dl.espressif.com/dl/package_esp32_index.json</code></p>
+        <p>
+          Haz clic en <strong>OK</strong> para guardar los cambios. Luego ve a 
+          <strong>Herramientas > Placa > Gestor de Tarjetas</strong>, selecciona <strong>DOIT ESP32 DEVKIT V1</strong> y busca "ESP32". 
+          Haz clic en <strong>Instalar</strong>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conexión del ESP32 -->
+  <div class="section">
+    <h2>Conexión del ESP32</h2>
+    <div class="image-text-block">
+      <div class="text">
+        <p>
+          Conecta tu ESP32 a la computadora usando un cable USB. Si no se detecta el dispositivo, descarga e instala el driver necesario desde 
+          <a href="https://puntoflotante.net/CP210x_VCP_Windows.zip" target="_blank">este enlace</a>.
+          Extrae los archivos y ejecuta el instalador. 
+        </p>
+        <p>
+          Luego, vuelve a Arduino IDE y selecciona la placa <strong>ESP32 Dev Module</strong> y el puerto correspondiente desde 
+          <strong>Herramientas > Puerto</strong>.
+        </p>
+      </div>
+      <img src="images/image7.png" alt="Conexión física del ESP32">
+    </div>
+  </div>
+
+  <!-- Código para servidor web -->
+  <div class="section">
+    <h2>Creación de un Servidor Web</h2>
+    <p>
+      Abre un nuevo proyecto en Arduino IDE, borra el texto inicial y pega el siguiente código para convertir tu ESP32 en un servidor web:
+    </p>
+    <pre>
+#include &lt;WiFi.h&gt;
+
+// Nombre de tu red Wi-Fi y contraseña
+const char* ssid = "tu_SSID";  // Reemplaza "tu_SSID" por el nombre de tu red
+const char* password = "tu_contraseña";  // Reemplaza "tu_contraseña" por tu contraseña de Wi-Fi
+
+// Crear un servidor web en el puerto 80
+WiFiServer server(80);
+
+void setup() {
+  Serial.begin(115200);
+
+  // Conectar al Wi-Fi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Conectando al Wi-Fi...");
+  }
+
+  Serial.println("Conectado al Wi-Fi");
+  Serial.println(WiFi.localIP());  // Imprimir la dirección IP
+
+  // Iniciar el servidor
+  server.begin();
+}
+
+void loop() {
+  WiFiClient client = server.available();  // Ver si hay un cliente conectado
+  if (client) {
+    Serial.println("Cliente conectado");
+    while (client.connected()) {
+      if (client.available()) {
+        String request = client.readStringUntil('\r');
+        Serial.println(request);
+        client.flush();
+
+        // Respuesta al cliente
+        client.println("HTTP/1.1 200 OK");
+        client.println("Content-type:text/html");
+        client.println();
+        client.println("&lt;h1&gt;¡Hola desde el ESP32!&lt;/h1&gt;");
+        client.println();
+        break;
+      }
+    }
+    client.stop();
+    Serial.println("Cliente desconectado");
+  }
+}
+    </pre>
+  </div>
+
+  <!-- Prueba final -->
+  <div class="section">
+    <h2>Prueba Final</h2>
+    <p>
+      Haz clic en el botón <strong>Verificar</strong> (icono de check) para compilar el código. Si no hay errores, haz clic en <strong>Subir</strong> para cargar el código al ESP32.
+    </p>
+    <p>
+      Abre el <strong>Monitor Serial</strong> (Ctrl + Shift + M) en Arduino IDE para ver la dirección IP del ESP32. Ingresa esa dirección en un navegador web para acceder a tu servidor.
+    </p>
+    <div class="image-text-block">
+      <img src="images/image3.png" alt="Resultado final en el navegador">
+      <div class="text">
+        <p>
+          Si ves el mensaje <strong>¡Hola desde el ESP32!</strong>, ¡felicidades! Has configurado con éxito tu ESP32 como un servidor web.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Enlace para volver -->
+<p style="text-align: center; padding: 20px;">
+  <a href="../Tutorial.html">Ir atrás</a>
+</p>
+</body>
+</html>

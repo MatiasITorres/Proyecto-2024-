@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cambio de Imágenes</title>
+  <style>
+    img {
+      width: 100%;
+      height: auto;
+      max-width: 600px;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="imagen" src="imagen1.jpg" alt="Imagen">
+  
+  <script>
+    const imagenes = [
+      "imagen1.jpg", 
+      "imagen2.jpg", 
+      "imagen3.jpg", 
+      "imagen4.jpg"
+    ];
+
+    let indice = 0;
+    const intervalo = 3000; // 3 segundos
+
+    function cambiarImagen() {
+      indice = (indice + 1) % imagenes.length;
+      document.getElementById("imagen").src = imagenes[indice];
+    }
+
+    setInterval(cambiarImagen, intervalo);
+  </script>
+
+</body>
+</html>
